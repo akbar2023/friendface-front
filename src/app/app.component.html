@@ -1,3 +1,3 @@
 <h1>{{title}} Client App</h1>
 
-<div id="chat-box">A little message: {{showMessage()}}</div>
+<div id="chat-box" *ngFor="let msg of messages">{{msg.author}}: {{msg.body}}</div>
