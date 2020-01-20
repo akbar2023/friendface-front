@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { WebSocketService } from './service/websocket.service';
 import { ChatService } from './service/chat.service';
 import { Observable } from 'rxjs';
-import { ChatMessage } from './model/chat-message';
+import chatMessage, { ChatMessage } from './model/chat-message';
 import { first } from 'rxjs/operators';
+import { WebSocketDataType } from './model/websocket-message';
 
 
 @Component({
@@ -14,13 +15,15 @@ import { first } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'FriendFace';
   messages: ChatMessage[];
+  mesg: WebSocketDataType;
 
-  constructor(private websocketService: WebSocketService, private chatService: ChatService) {
-  }
+  constructor(private websocketService: WebSocketService, private chatService: ChatService) { }
 
   ngOnInit(): void {
-    this.websocketService.listenToMessages().subscribe(msg => {
+    this.websocketService.listenToMessages<ChatMessage>().subscribe(msg => {
       console.log('Response from websocket: ', msg);
+      console.log('Author: ' + msg.author);
+      return this.messages.push(msg);
     });
 
     this.getMessages();
