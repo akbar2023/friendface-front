@@ -1,5 +1,16 @@
-<form [formGroup]="messageForm">
-  <input type="text" id="messageId" formControlName="message" placeholder="Type your message here...">
-  <input type="text" id="nameId" formControlName="name" placeholder="Type your name here...">
-  <button type="submit">Send</button>
+<form [formGroup]="messageForm" (ngSubmit)="onSubmit()">
+  <!-- <label>
+    Name:
+    <input type="text" formControlName="author" placeholder="Bob or something...">
+  </label> -->
+
+  <div id="text-board">
+
+    <label>
+      <input type="text" id="messageId" formControlName="body" placeholder="Type your message here...">
+    </label>
+  </div>
+
+  <button type="submit" [disabled]="!messageForm.valid">Submit</button>
+
 </form>

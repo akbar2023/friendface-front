@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { WebSocketService } from './service/websocket.service';
 import { ChatService } from './service/chat.service';
-import { Observable } from 'rxjs';
-import chatMessage, { ChatMessage } from './model/chat-message';
-import { first } from 'rxjs/operators';
-import { WebSocketDataType } from './model/websocket-message';
+import { ChatMessage } from './model/chat-message';
+import { WebSocketTopic } from './model/websocket-message';
 
 
 @Component({
@@ -12,28 +10,26 @@ import { WebSocketDataType } from './model/websocket-message';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'FriendFace';
-  messages: ChatMessage[];
-  mesg: WebSocketDataType;
+  // export class AppComponent implements OnInit {
+  // messages: ChatMessage[];
 
-  constructor(private websocketService: WebSocketService, private chatService: ChatService) { }
+  // constructor(private websocketService: WebSocketService, private chatService: ChatService) { }
 
-  ngOnInit(): void {
-    this.websocketService.listenToMessages<ChatMessage>().subscribe(msg => {
-      console.log('Response from websocket: ', msg);
-      console.log('Author: ' + msg.author);
-      return this.messages.push(msg);
-    });
+  // ngOnInit(): void {
+  //   this.getMessages();
 
-    this.getMessages();
-  }
+  //   this.websocketService.listenToMessages<ChatMessage>(WebSocketTopic.Chat).subscribe(msg => {
+  //     console.log('Response from websocket: ', msg);
+  //     return this.messages.push(msg);
+  //   });
+  // }
 
-  getMessages() {
-    return this.chatService.getMessages().subscribe((data) => {
-      // console.log(data);
-      this.messages = data;
-    });
-  }
-
+  // getMessages() {
+  //   return this.chatService.getMessages().subscribe((data) => {
+  //     console.log('Saved messages: ', data);
+  //     this.messages = data;
+  //   });
+  // }
 }

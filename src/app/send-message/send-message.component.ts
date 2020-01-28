@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../service/chat.service';
-import chatMessage, { ChatMessage } from '../model/chat-message';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { ChatMessage } from '../model/chat-message';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../service/user.service';
+import { WebSocketService } from '../service/websocket.service';
+import { WebSocketTopic } from '../model/websocket-message';
+import { observable } from 'rxjs';
 
 @Component({
   selector: 'app-send-message',
@@ -9,30 +13,37 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./send-message.component.scss']
 })
 export class SendMessageComponent implements OnInit {
+  messages: ChatMessage[];
 
-  messageForm: FormGroup;
+  messageForm = new FormGroup({
+    // author: new FormControl('', Validators.required),
+    body: new FormControl('', Validators.required),
+  });
 
 
-  createForm(message: ChatMessage) {
-    this.messageForm = this.fb.group({
-      name: message.author,
-      body: message.body,
-      timestamp: '',
-      channel: '',
-    });
-  }
-
-  constructor(private chatService: ChatService, private fb: FormBuilder) {
-    // this.sendMessage();
-  }
+  constructor(private chatService: ChatService, private userService: UserService, private websocketService: WebSocketService) { }
 
   ngOnInit() {
+    this.userService.getUserName().subscribe(name => console.log(name, '--message sent'));
   }
 
-  // onSubmit() {
-  //     this.chatService.postMessage() {
-  //       this.messageForm;
-  //     }
-  // }
+  onSubmit() {
+    // this.chatService.postMessage({
+    //   author: this.messageForm.value.author,
+    //   body: this.messageForm.value.body,
+    //   channel: this.messageForm.value.channel,
+    // }).subscribe(chat => console.log('okay', chat, 'OK'));
+
+
+    this.websocketService.sendMessage(WebSocketTopic.Chat, {
+      author: '',
+      channel: '',
+      body: this.messageForm.value.body,
+    });
+
+
+  }
+
+
 
 }

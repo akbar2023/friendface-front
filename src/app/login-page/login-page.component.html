@@ -1,0 +1,11 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+  <h2>Login here:</h2>
+
+  <label>
+    Name:
+    <input type="text" formControlName="name" placeholder="Bob or something...">
+  </label>
+
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>

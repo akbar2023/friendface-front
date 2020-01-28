@@ -13,14 +13,20 @@ export enum WebSocketTopic {
   Login = 'login',
   UserConnected = 'user connected',
   UserDisconnected = 'user disconnected',
+  JoinChannel = 'join channel',
 }
 
 export type LoginMessageData = Partial<ConnectedUser>;
 
-export type WebSocketDataType = ChatMessage | LoginMessageData | BoardMessage | UserConnectedData | UserDisconnectedData;
+export type WebSocketDataType = ChatMessage | LoginMessageData | BoardMessage
+ | UserConnectedData | UserDisconnectedData | JoinChannelData;
 
 export type UserConnectedData = ConnectedUser;
 
 export interface UserDisconnectedData {
+  id: string;
+}
+
+export interface JoinChannelData {
   id: string;
 }

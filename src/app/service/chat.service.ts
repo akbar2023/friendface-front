@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import chatMessage, { ChatMessage } from '../model/chat-message';
+import { ChatMessage } from '../model/chat-message';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,6 +18,7 @@ export class ChatService {
   }
 
   postMessage(message: ChatMessage): Observable<ChatMessage> {
+    console.log('Here: ' +  message.body);
     return this.http.post<ChatMessage>(this.apiUrl, message);
   }
 

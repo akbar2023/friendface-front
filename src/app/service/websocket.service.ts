@@ -31,35 +31,3 @@ export class WebSocketService {
     );
   }
 }
-
-
-
-
-
-
-/*
-
-@Injectable({
-  providedIn: 'root'
-})
-export class WebSocketService {
-  websocket: WebSocketSubject<any> = webSocket('ws://localhost:3001');
-
-  constructor() { }
-
-  sendMessage<T>(topic: any, data: T) {
-    this.websocket.next({
-      topic,
-      data
-    });
-  }
-
-  listenToMessages<T>(filterTopic?: any): Observable<T> {
-    return this.websocket.asObservable().pipe(
-      filter(message => filterTopic ? message.topic === filterTopic : true),
-      map(message => message.data as T)
-    );
-  }
-}
-
-*/
