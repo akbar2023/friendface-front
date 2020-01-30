@@ -16,7 +16,6 @@ export class SendMessageComponent implements OnInit {
   messages: ChatMessage[];
 
   messageForm = new FormGroup({
-    // author: new FormControl('', Validators.required),
     body: new FormControl('', Validators.required),
   });
 
@@ -43,7 +42,6 @@ export class SendMessageComponent implements OnInit {
 
 
   }
-
 
 
 }

@@ -1,6 +1,11 @@
 
 <div id="chat-box" *ngFor="let msg of messages">{{msg.author}}: {{msg.body}}</div>
 
-
+<div>
+  <h3>Users</h3>
+  <div id="connected-users" *ngFor="let user of connectedUsers">
+    <p>{{user.name}}</p>
+  </div>
+</div>
 
 <app-send-message></app-send-message>

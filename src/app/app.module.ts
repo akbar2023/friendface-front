@@ -9,6 +9,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MessageBoardComponent } from './message-board/message-board.component';
 import { AuthGuard } from './auth/auth.guard';
+import { UserService } from './service/user.service';
 
 
 const appRoutes: Routes = [
@@ -19,11 +20,11 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent,
-    canActivate: [AuthGuard],
     data: { title: 'FriendFace: Login' }
   },
   {
     path: 'messages',
+    canActivate: [AuthGuard],
     component: MessageBoardComponent,
     data: { title: 'FriendFace: Messages' }
   },
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     RouterModule.forRoot(appRoutes),
   ],
+  providers: [AuthGuard, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -13,6 +13,8 @@ import { Router } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
 
+  userName: any = this.userService.getUserName().subscribe(data => console.log(data));
+
   profileForm = new FormGroup({
     name: new FormControl('', Validators.required),
   });
@@ -27,8 +29,12 @@ export class LoginPageComponent implements OnInit {
   onSubmit() {
     this.userService.setUserName(this.profileForm.value.name);
     this.websocketService.sendMessage(WebSocketTopic.Login, { name: this.profileForm.value.name });
-    // if (this.userService.getUserName().subscribe(() => {
     this.router.navigate(['messages']);
-    // })) {}
+
+    // if (this.userService.login().subscribe(
+    //   data => console.log(data, 'LOGIN DONE', this.userName)
+    // )) {
+    //   this.router.navigate(['messages']);
+    // }
   }
 }

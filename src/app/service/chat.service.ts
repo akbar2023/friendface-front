@@ -17,9 +17,10 @@ export class ChatService {
     return this.http.get<ChatMessage[]>(this.apiUrl);
   }
 
-  postMessage(message: ChatMessage): Observable<ChatMessage> {
-    console.log('Here: ' +  message.body);
-    return this.http.post<ChatMessage>(this.apiUrl, message);
-  }
+  // ** Not Used Anymore
+  // postMessage(message: ChatMessage): Observable<ChatMessage> {
+  //   console.log('Here: ' +  message.body);
+  //   return this.http.post<ChatMessage>(this.apiUrl, message);
+  // }
 
 }
