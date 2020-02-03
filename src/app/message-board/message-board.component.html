@@ -1,10 +1,16 @@
-
 <div id="chat-box" *ngFor="let msg of messages">{{msg.author}}: {{msg.body}}</div>
 
 <div>
   <h3>Users</h3>
   <div id="connected-users" *ngFor="let user of connectedUsers">
     <p>{{user.name}}</p>
+  </div>
+</div>
+
+<div>
+  <h3>Channels:</h3>
+  <div id="channels" *ngFor="let channel of channels">
+    <p>#{{channel.name}}</p>
   </div>
 </div>
 

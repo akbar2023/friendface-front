@@ -31,9 +31,8 @@ export class LoginPageComponent implements OnInit {
     this.websocketService.sendMessage(WebSocketTopic.Login, { name: this.profileForm.value.name });
     this.router.navigate(['messages']);
 
-    // if (this.userService.login().subscribe(
-    //   data => console.log(data, 'LOGIN DONE', this.userName)
-    // )) {
+    // if (this.userService.isLoggedIn) {
+    //   console.log(this.userService.getUserName().subscribe(), '--Vient de se connecter');
     //   this.router.navigate(['messages']);
     // }
   }

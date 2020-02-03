@@ -6,6 +6,8 @@ import { WebSocketTopic } from '../model/websocket-message';
 import { UserService } from '../service/user.service';
 import { Router } from '@angular/router';
 import { ConnectedUser } from '../model/connected-user.service';
+import { ChannelService } from '../service/channel.service';
+import { Channel } from '../model/channel';
 
 @Component({
   selector: 'app-message-board',
@@ -15,12 +17,22 @@ import { ConnectedUser } from '../model/connected-user.service';
 export class MessageBoardComponent implements OnInit {
 
   messages: ChatMessage[];
-  connectedUsers: ConnectedUser[];
+  connectedUsers: ConnectedUser[] = [];
+  channels: Channel[];
 
-  constructor(private websocketService: WebSocketService, private chatService: ChatService, private userservice: UserService,
-              private router: Router) { }
+  constructor(
+              private websocketService: WebSocketService,
+              private chatService: ChatService,
+              private userservice: UserService,
+              private chanelservice: ChannelService,
+              private router: Router
+              ) { }
 
   ngOnInit(): void {
+    this.getConnectedUsers();
+    this.getMessages();
+    this.getAvailableChannels();
+
     this.websocketService.listenToMessages<ChatMessage>(WebSocketTopic.Chat).subscribe(data => {
       console.log(data, '--Message received from websocket');
       // pushes every new messages to the messages array, when receives
@@ -28,13 +40,10 @@ export class MessageBoardComponent implements OnInit {
     });
 
     this.websocketService.listenToMessages<ConnectedUser>(WebSocketTopic.UserConnected).subscribe(data => {
-      console.log(data, '-- User connected from websocket');
+      console.log(data, '--User connected from websocket');
       this.connectedUsers.push(data);
     });
 
-
-    this.getMessages();
-    this.getConnectedUsers();
   }
 
   getMessages() {
@@ -49,6 +58,13 @@ export class MessageBoardComponent implements OnInit {
     return this.userservice.getConnectedUser().subscribe((data) => {
       console.log(data, '--Connected Users');
       this.connectedUsers = data;
+    });
+  }
+
+  getAvailableChannels() {
+    return this.chanelservice.getChannels().subscribe((data) => {
+      console.log(data, '--Available Channels');
+      this.channels = data;
     });
   }
 

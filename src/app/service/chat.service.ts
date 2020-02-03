@@ -17,7 +17,7 @@ export class ChatService {
     return this.http.get<ChatMessage[]>(this.apiUrl);
   }
 
-  // ** Not Used Anymore
+  // ** Not Used Anymore but could be used
   // postMessage(message: ChatMessage): Observable<ChatMessage> {
   //   console.log('Here: ' +  message.body);
   //   return this.http.post<ChatMessage>(this.apiUrl, message);
