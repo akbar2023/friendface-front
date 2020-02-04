@@ -19,14 +19,15 @@ export class MessageBoardComponent implements OnInit {
   messages: ChatMessage[];
   connectedUsers: ConnectedUser[] = [];
   channels: Channel[];
+  // userIndex: number = null;
 
   constructor(
-              private websocketService: WebSocketService,
-              private chatService: ChatService,
-              private userservice: UserService,
-              private chanelservice: ChannelService,
-              private router: Router
-              ) { }
+    private websocketService: WebSocketService,
+    private chatService: ChatService,
+    private userservice: UserService,
+    private chanelservice: ChannelService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.getConnectedUsers();
@@ -42,6 +43,20 @@ export class MessageBoardComponent implements OnInit {
     this.websocketService.listenToMessages<ConnectedUser>(WebSocketTopic.UserConnected).subscribe(data => {
       console.log(data, '--User connected from websocket');
       this.connectedUsers.push(data);
+    });
+
+    this.websocketService.listenToMessages<ConnectedUser>(WebSocketTopic.UserDisconnected).subscribe(data => {
+      console.log(data, '--User disconnected from websocket');
+      // console.log(this.userIndex, '--Index de user');
+      const userIndex = (user: ConnectedUser) => {
+        if (user._id === data.id) {
+          return true;
+        }
+        return false;
+      }
+      let index = this.connectedUsers.findIndex(userIndex);
+
+      this.connectedUsers.splice(index, 1);
     });
 
   }
