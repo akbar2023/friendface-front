@@ -1,6 +1,7 @@
 import { Schema, Document, model } from 'mongoose';
 
 export interface ConnectedUser {
+  _id: any;
   name: string;
   webSocketSessionId: string;
 }

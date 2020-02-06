@@ -19,7 +19,6 @@ export class MessageBoardComponent implements OnInit {
   messages: ChatMessage[];
   connectedUsers: ConnectedUser[] = [];
   channels: Channel[];
-  // userIndex: number = null;
 
   constructor(
     private websocketService: WebSocketService,
@@ -45,7 +44,7 @@ export class MessageBoardComponent implements OnInit {
       this.connectedUsers.push(data);
     });
 
-    this.websocketService.listenToMessages<ConnectedUser>(WebSocketTopic.UserDisconnected).subscribe(data => {
+    this.websocketService.listenToMessages<{id: string}>(WebSocketTopic.UserDisconnected).subscribe(data => {
       console.log(data, '--User disconnected from websocket');
       // console.log(this.userIndex, '--Index de user');
       const userIndex = (user: ConnectedUser) => {
@@ -53,8 +52,9 @@ export class MessageBoardComponent implements OnInit {
           return true;
         }
         return false;
-      }
-      let index = this.connectedUsers.findIndex(userIndex);
+      };
+
+      const index = this.connectedUsers.findIndex(userIndex);
 
       this.connectedUsers.splice(index, 1);
     });
